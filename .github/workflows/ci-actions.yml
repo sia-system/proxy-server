@@ -1,0 +1,21 @@
+name: build artifactor
+
+on: [push, pull_request]
+
+jobs:
+  deploy:
+    name: Create & push Docker image to GitHub Packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: image-attributes
+        run: |
+          echo ::set-output name=name::${GITHUB_REPOSITORY////-}
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: ${{ github.repository }}/${{ steps.image-attributes.outputs.name }}
+          tag_with_sha: true
