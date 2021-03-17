@@ -1,4 +1,4 @@
-FROM envoyproxy/envoy-alpine:v1.14.1
+FROM envoyproxy/envoy-alpine:v1.17.1
 
 EXPOSE 8080
 EXPOSE 8443
